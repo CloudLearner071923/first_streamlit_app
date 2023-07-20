@@ -30,4 +30,5 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 # Display the table on the page.
 #streamlit.dataframe(my_fruit_list)
 #Finally, we'll ask the app to use the data in fruits_to_show in the dataframe it displays on the page. 
-streamlit.dataframe(fruits_to_show)
+streamlit.dataframe (fruits_to_show)
+
