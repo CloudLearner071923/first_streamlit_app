@@ -89,19 +89,35 @@ streamlit.stop()
 
 #use the streamlit secret file to connect
 #import snowflake.connector
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-#my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
-my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
-#my_data_row = my_cur.fetchone()
-#fetch all rows
-my_data_rows = my_cur.fetchall()
-#streamlit.text("Hello from Snowflake:")
-#streamlit.text("The fruit load list contains:")
-#streamlit.text(my_data_row)
-#changed to dataframe for nicer view
+
+#my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+#my_cur = my_cnx.cursor()
+##my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
+#my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
+##my_data_row = my_cur.fetchone()
+##fetch all rows
+#my_data_rows = my_cur.fetchall()
+##streamlit.text("Hello from Snowflake:")
+##streamlit.text("The fruit load list contains:")
+##streamlit.text(my_data_row)
+##changed to dataframe for nicer view
+#streamlit.header("The fruit load list contains:")
+#streamlit.dataframe(my_data_rows)
+
+#rewrite snowflake.connector section to add a load button action
 streamlit.header("The fruit load list contains:")
-streamlit.dataframe(my_data_rows)
+
+#Snowflake related functions
+def get_fruit_load_list():
+    with my_cur.cursor() as my_cur:
+        my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
+        return my_cur.fetchall()
+
+#Add a button to load the fruit
+if streamlit.button('Get Fruit Load List'):
+    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    my_data_rows = get_fruit_load_list()
+    streamlit.dataframe(my_data_rows)
 
 #ask user for input to add fruit to the list, no default
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
