@@ -40,8 +40,9 @@ streamlit.write('The user entered ', fruit_choice)
 
 import requests
 #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-#change to use variable
+#change to split out fruit choice
 #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
+#change to use variable from user input
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
 
 #http response
