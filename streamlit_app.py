@@ -37,30 +37,45 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 #Finally, we'll ask the app to use the data in fruits_to_show in the dataframe it displays on the page. 
 streamlit.dataframe(fruits_to_show)
 
-#New section to display fruityvice API response
+##New section to display fruityvice API response
+#streamlit.header("Fruityvice Fruit Advice!")
+##ask user for input, default to Kiwi fruit
+#fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+#streamlit.write('The user entered ', fruit_choice)
+
+##import requests
+##fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+##change to split out fruit choice
+##fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
+##change to use variable from user input
+#fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+
+##http response
+##streamlit.text(fruityvice_response)
+
+##json output
+##streamlit.text(fruityvice_response.json()) # just writes the data to the screen
+
+## take the json response and normalize it
+#fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+##output it to the screen
+#streamlit.dataframe(fruityvice_normalized)
+
+#New section to display fruityvice api response using try-except (with nested if-else)
 streamlit.header("Fruityvice Fruit Advice!")
-#ask user for input, default to Kiwi fruit
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write('The user entered ', fruit_choice)
+try:
+   fruit_choice = streamlit.text_input('What fruit would you like information about?')
+   if not fruit_choice:
+        streamlit.error("Please select a fruit to get information.")
+   else:
+        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+        fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+        streamlit.dataframe(fruityvice_normalized)
 
-#import requests
-#fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-#change to split out fruit choice
-#fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
-#change to use variable from user input
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+except URLError as e:
+    streamlit.error()
 
-#http response
-#streamlit.text(fruityvice_response)
-
-#json output
-#streamlit.text(fruityvice_response.json()) # just writes the data to the screen
-
-# take the json response and normalize it
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-#output it to the screen
-streamlit.dataframe(fruityvice_normalized)
-
+#
 # do not run anything past here while we troubleshoot
 streamlit.stop()
 
