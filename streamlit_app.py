@@ -77,5 +77,6 @@ add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 streamlit.write('Thanks for adding ', add_my_fruit)
 
 #this should fail, but go with it for now
+#control flow problem, meaning this will execute each time we interact with the page
 my_cur.execute("insert into fruit_load_list values ('from streamlit')")
 
