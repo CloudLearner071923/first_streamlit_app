@@ -41,7 +41,8 @@ streamlit.write('The user entered ', fruit_choice)
 import requests
 #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 #change to use variable
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
+#fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
 
 #http response
 #streamlit.text(fruityvice_response)
